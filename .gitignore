@@ -1,0 +1,16 @@
+# Machine-specific: points at this machine's Android SDK.
+local.properties
+
+.gradle/
+build/
+*/build/
+.kotlin/
+
+node_modules/
+.DS_Store
+
+# CodeGraph local symbol index — regenerate with `pnpm exec codegraph index`
+.codegraph/
+
+# Claude Code local overrides
+.claude/settings.local.json

@@ -1,0 +1,30 @@
+{
+  "//": "Workflow toolchain for forgekit-android. OpenSpec and CodeGraph are npm packages, so node is this workflow's own runtime — it is not here because the product is JavaScript. nodeSubprojects stays empty: app/ is a Gradle module, not an npm project.",
+  "name": "forgekit-android-workflow",
+  "private": true,
+  "packageManager": "pnpm@11.1.1",
+  "engines": {
+    "node": ">=22.16",
+    "pnpm": ">=11"
+  },
+  "forgekit": {
+    "sourceGlobs": [
+      "*.kt",
+      "*.kts"
+    ],
+    "requiredTools": [
+      "java"
+    ],
+    "nodeSubprojects": []
+  },
+  "scripts": {
+    "preflight": "bash scripts/preflight.sh",
+    "sync-workflow": "bash scripts/sync-workflow.sh",
+    "verify": "bash scripts/verify.sh"
+  },
+  "devDependencies": {
+    "@colbymchenry/codegraph": "^1.5.0",
+    "@fission-ai/openspec": "^1.9.0",
+    "grillme": "latest"
+  }
+}
