@@ -1,0 +1,38 @@
+version: 2
+
+updates:
+  # The workflow tooling tracks the newest release its version policy permits, and nobody
+  # remembers to check. A bump here can change whether openspec/config.yaml still yields its
+  # rules, which nothing in CI would notice — run `pnpm preflight` before merging one.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: chore(deps)
+    groups:
+      workflow-tooling:
+        patterns:
+          - "*"
+
+  # Every version lives in gradle/libs.versions.toml, so each of these is a one-line change to
+  # the catalog rather than an edit spread across build files.
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore(deps)
+    groups:
+      androidx-compose:
+        patterns:
+          - "androidx.compose*"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: chore(deps)
