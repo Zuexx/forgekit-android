@@ -110,6 +110,20 @@ overwrites them and re-splices the shared rules into `openspec/config.yaml` belo
 line, so a local edit disappears without a word. What this repository owns is everything above
 that marker — its `context:` block — plus `scripts/verify.sh`, `package.json`, and this file.
 
+What that workflow must *do* is specified in
+[the forgekit repository's workflow-toolchain spec](https://github.com/Zuexx/forgekit/blob/main/openspec/specs/workflow-toolchain/spec.md)
+— the checks preflight owes you, what the sync may and may not overwrite, and the rule that a
+check which cannot measure its subject fails rather than passes. Those requirements govern this
+repository too, and a change to them is proposed there, not here.
+
+They live in one repository rather than being shared like the scripts are, for a reason worth
+knowing before moving them: syncing a spec would make it read-only here, and `/opsx:archive`
+writes to `openspec/specs/` — no repository could then archive a change that touched the
+workflow. Moving them to forgekit-workflow instead would put them somewhere with no indexable
+code, where the first proposal rule cannot be satisfied. What actually holds all three
+repositories to the same behaviour is that `scripts/preflight.sh` is byte-identical in each and
+runs; the spec documents it.
+
 ## Conventions that are easy to get wrong
 
 - **The view model depends on an interface, never a concrete provider.** `SampleListViewModel`
