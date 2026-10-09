@@ -30,7 +30,15 @@ class SampleListViewModel(
         } catch (failure: SampleResourceLoadException) {
             State.Failed(failure.reason)
         } catch (error: Exception) {
-            State.Failed(error.toString())
+            // Only SampleResourceLoadException.reason is trusted as user-facing text. Any other
+            // exception type is unclassified — once this provider is swapped for a real
+            // network implementation, its message could contain internal URLs, timeout
+            // internals, or other details that should never reach the screen.
+            State.Failed(UNCLASSIFIED_FAILURE_REASON)
         }
+    }
+
+    companion object {
+        const val UNCLASSIFIED_FAILURE_REASON = "Something went wrong. Please try again."
     }
 }

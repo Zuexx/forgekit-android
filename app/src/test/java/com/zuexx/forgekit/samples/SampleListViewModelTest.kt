@@ -34,4 +34,22 @@ class SampleListViewModelTest {
 
         assertEquals(SampleListViewModel.State.Failed("no network"), viewModel.state.value)
     }
+
+    @Test
+    fun `load replaces an unclassified exception's message with a fixed generic reason`() =
+        runTest {
+            // Anything that is not a SampleResourceLoadException is unclassified and must never
+            // have its raw message (which could carry internal URLs, timeout details, etc. once
+            // this provider talks to a real backend) surfaced to the user.
+            val viewModel = SampleListViewModel(
+                StubProvider(Result.failure(IllegalStateException("http://internal/host timed out"))),
+            )
+
+            viewModel.load()
+
+            assertEquals(
+                SampleListViewModel.State.Failed(SampleListViewModel.UNCLASSIFIED_FAILURE_REASON),
+                viewModel.state.value,
+            )
+        }
 }
