@@ -98,9 +98,10 @@ the executable bit still runs.
 
 ## The shared workflow
 
-`scripts/preflight.sh`, `scripts/sync-workflow.sh`, `.githooks/pre-push`, `.mcp.json`,
-`.claude/settings.json`, and `openspec/rules.yaml` are owned by the forgekit-workflow
-repository and shared with every ForgeKit-family repo. Edit them there, not here:
+The files owned by the forgekit-workflow repository and shared with every ForgeKit-family
+repo are listed in `scripts/sync-workflow.sh`'s `SHARED_PATHS` array — that array is the
+authoritative, always-current list, not this paragraph, so read it there rather than trusting
+a copy here to have kept up. Edit those files there, not here:
 
 ```bash
 pnpm sync-workflow && pnpm preflight
@@ -133,6 +134,10 @@ bound by a requirement should be the one that can read it.
   when the view model publishes an empty list.
 - **Commits follow Conventional Commits.** Branch off main and open a PR so CI runs before
   merging.
+- **`android:allowBackup="true"` in the manifest is only Android's own default, written out
+  explicitly.** It is harmless for this sample, which holds no sensitive data. A fork that
+  starts storing credentials or personal data should review `allowBackup` and
+  `dataExtractionRules` before shipping, rather than inheriting the default unexamined.
 
 ## Where things are documented
 
