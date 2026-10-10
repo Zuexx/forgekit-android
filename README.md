@@ -17,8 +17,9 @@ pnpm preflight          # exits non-zero until the workflow genuinely works
 pnpm verify             # assemble, test, confirm the tests ran
 ```
 
-Requires a JDK and the Android SDK. The Gradle wrapper is committed, so no Gradle install is
-needed.
+Requires a JDK and the Android SDK. CI builds and verifies with Temurin 21, so that is the JDK
+version actually exercised and verified; other JDKs may work but are not checked. The Gradle
+wrapper is committed, so no Gradle install is needed.
 
 ## Generating a product
 
